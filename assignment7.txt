@@ -1,0 +1,93 @@
+1)
+
+kd4_avdhut_83603>select count(odate) from orders where odate='1990-10-03';
+
++--------------+
+| count(odate) |
++--------------+
+|            5 |
++--------------+
+1 row in set (0.04 sec)
+
+2)
+
+d4_avdhut_83603>select count(city) from customer where city not in('null');
+
+or 
+
+kd4_avdhut_83603>select count(city) from customer where city is not null;
+
+
++-------------+
+| count(city) |
++-------------+
+|           7 |
++-------------+
+1 row in set (0.00 sec)
+
+
+
+3)
+kd4_avdhut_83603>select cnum,min(amt) from orders group by cnum order by 1;
++------+----------+
+| cnum | min(amt) |
++------+----------+
+| 2001 |   767.19 |
+| 2002 |  1713.23 |
+| 2003 |  5160.45 |
+| 2004 |    75.75 |
+| 2006 |  4723.00 |
+| 2007 |  1900.10 |
+| 2008 |    18.69 |
++------+----------+
+7 rows in set (0.00 sec)
+
+4)
+
+kd4_avdhut_83603>select min(cname) from customer where cname like 'G%' order by cname;
+
+or 
+
+d4_avdhut_83603>select min(cname) from customer where cname like 'G%' ;
+
+
+
++------------+
+| min(cname) |
++------------+
+| Giovanni   |
++------------+
+1 row in set (0.00 sec)
+
+
+
+5)
+
+kd4_avdhut_83603>select city,max(rating) from customer group by city;
++----------+-------------+
+| city     | max(rating) |
++----------+-------------+
+| London   |         100 |
+| Rome     |         200 |
+| San Jose |         300 |
+| Berlin   |         300 |
++----------+-------------+
+4 rows in set (0.00 sec)
+
+
+6)
+
+kd4_avdhut_83603>select odate,count(distinct snum) from orders group by odate;
+
+
+------------+----------------------+
+| odate      | count(distinct snum) |
++------------+----------------------+
+| 1990-10-03 |                    4 |
+| 1990-10-04 |                    2 |
+| 1990-10-05 |                    1 |
+| 1990-10-06 |                    2 |
++------------+-----------
+
+
+

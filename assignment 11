@@ -1,0 +1,51 @@
+1)
+kd4_avdhut_83603>
+
+                 select * from orders 
+                 where cnum=(select cnum from customer 
+                             where cname='Cisneros');
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
++------+---------+------------+------+------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+2)
+kd4_avdhut_83603>
+                  select cname,rating from customer 
+                  where cnum =any(select cnum from orders 
+                                   group by cnum 
+                                   having sum(amt)>(select avg(amt) from orders));
++---------+--------+
+| cname   | rating |
++---------+--------+
+| Liu     |    200 |
+| Clemens |    100 |
++---------+--------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+3)
+kd4_avdhut_83603>
+                 
+                 select snum,sum(amt) from orders 
+                 group by Snum
+                 having sum(amt)>(select max(amt) from orders);
+                 
++------+----------+
+| snum | sum(amt) |
++------+----------+
+| 1001 | 15382.07 |
++------+----------+
+1 row in set (0.00 sec)
+

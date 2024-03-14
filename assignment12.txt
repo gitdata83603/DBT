@@ -1,0 +1,76 @@
+1)
+kd4_avdhut_83603>select * from customer 
+    -> where rating>=any(select rating from customer where snum=(select snum from SALESPEOPLE where Sname='Serres'));
++------+----------+----------+--------+------+
+| cnum | cname    | city     | rating | snum |
++------+----------+----------+--------+------+
+| 2002 | Giovanni | Rome     |    200 | 1003 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+4 rows in set (0.01 sec)
+
+
+
+
+2)
+
+
+kd4_avdhut_83603>
+              
+              select Snum,Sname from SALESPEOPLE 
+              where Snum not in(select SALESPEOPLE.Snum from SALESPEOPLE,customer
+                                where SALESPEOPLE.Snum=customer.snum and SALESPEOPLE.City=customer.city);
++------+---------+
+| Snum | Sname   |
++------+---------+
+| 1004 | Motika  |
+| 1007 | Rifkin  |
+| 1003 | Axelrod |
++------+---------+
+3 rows in set (0.00 sec)
+
+
+
+
+3)
+
+
+kd4_avdhut_83603>select * from orders where amt>any(select amt from orders where cnum in(select cnum from customer where city='London'));
+
+
+
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+7 rows in set (0.04 sec)
+
+
+
+
+4)
+kd4_avdhut_83603>select * from orders where amt>(select min(amt) from orders where cnum in(select cnum from customer where city='London'));--> using min()
+
++------+---------+------------+------+------+
+| onum | amt     | odate      | cnum | snum |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+7 rows in set (0.04 sec)
+
+

@@ -1,0 +1,71 @@
+1)
+ kd4_avdhut_83603>
+                  
+                create table Multicast
+                as
+                select Snum,Sname,city,Comm from SALESPEOPLE 
+                where Snum=any(select snum from customer
+                               group by snum 
+                               having count(snum)>1);
+
+
+kd4_avdhut_83603>
+                select * from Multicast;
+
++------+--------+----------+------+
+| Snum | Sname  | city     | Comm |
++------+--------+----------+------+
+| 1001 | peel   | London   | 0.12 |
+| 1002 | Serres | San Jose | 0.13 |
++------+--------+----------+------+
+2 rows in set (0.00 sec)
+
+
+
+2)
+
+
+    
+    
+    
+
+3)
+
+kd4_avdhut_83603>
+
+      select * from SALESPEOPLE1;
+      
+      
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+
+//AS WE ARE READING FROM DIFFERENT TABLE AND WRITING IN DIFFERENT TABLE IT WILL NOT CAUSE READ WRITE INCONSISTENCY--> NO NEED TO CREATE TABLE OF SELECT WITH ALIAS 
+kd4_avdhut_83603>
+
+                  update SALESPEOPLE1
+                  set Comm=Comm+0.20 
+                  where Snum=any(select snum from orders 
+                                 group by snum 
+                                 having sum(amt)>3000);
+
+
+kd4_avdhut_83603>select * from SALESPEOPLE1;
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | peel    | London    | 0.32 |
+| 1002 | Serres  | San Jose  | 0.33 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.01 sec)
+
+

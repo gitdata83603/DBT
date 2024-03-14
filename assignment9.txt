@@ -1,0 +1,91 @@
+1)
+
+
+kd4_avdhut_83603>select onum,cname from orders,customer where customer.cnum=orders.cnum;
+
+
++------+----------+
+| onum | cname    |
++------+----------+
+| 3001 | Cisneros |
+| 3003 | Hoffman  |
+| 3002 | Pereira  |
+| 3005 | Liu      |
+| 3006 | Cisneros |
+| 3009 | Giovanni |
+| 3007 | Grass    |
+| 3008 | Clemens  |
+| 3010 | Grass    |
+| 3011 | Clemens  |
++------+----------+
+
+10 rows in set (0.00 sec)
+
+
+
+2)
+kd4_avdhut_83603>select Sname,cname,onum from orders,customer,SALESPEOPLE
+    -> where SALESPEOPLE.Snum=customer.snum and customer.cnum=orders.cnum;
++---------+----------+------+
+| Sname   | cname    | onum |
++---------+----------+------+
+| Rifkin  | Cisneros | 3001 |
+| peel    | Hoffman  | 3003 |
+| Motika  | Pereira  | 3002 |
+| Serres  | Liu      | 3005 |
+| Rifkin  | Cisneros | 3006 |
+| Axelrod | Giovanni | 3009 |
+| Serres  | Grass    | 3007 |
+| peel    | Clemens  | 3008 |
+| Serres  | Grass    | 3010 |
+| peel    | Clemens  | 3011 |
++---------+----------+------+
+10 rows in set (0.00 sec)
+
+
+
+
+
+3)
+
+kd4_avdhut_83603>select customer.cname,SALESPEOPLE.Sname,SALESPEOPLE.comm from customer,SALESPEOPLE where customer.snum=SALESPEOPLE.Snum and SALESPEOPLE.comm>0.12;
+
+or
+
+
+kd4_avdhut_83603>select cname,Sname,comm from customer,SALESPEOPLE where customer.snum=SALESPEOPLE.Snum and comm>0.12;
+
+
++----------+--------+------+
+| cname    | Sname  | comm |
++----------+--------+------+
+| Liu      | Serres | 0.13 |
+| Grass    | Serres | 0.13 |
+| Cisneros | Rifkin | 0.15 |
++----------+--------+------+
+3 rows in set (0.01 sec)
+
+
+
+
+
+
+4)
+
+
+kd4_avdhut_83603>select onum,amt,amt*Comm"commission" from orders,customer,SALESPEOPLE where orders.snum=SALESPEOPLE.Snum and customer.cnum=orders.cnum and customer.rating>100;
++------+---------+------------+
+| onum | amt     | commission |
++------+---------+------------+
+| 3010 | 1309.95 |     170.29 |
+| 3007 |   75.75 |       9.85 |
+| 3005 | 5160.45 |     670.86 |
+| 3006 | 1098.16 |     164.72 |
+| 3001 |   18.69 |       2.80 |
+| 3009 | 1713.23 |     171.32 |
++------+---------+------------+
+6 rows in set (0.00 sec)
+
+
+
+
